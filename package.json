@@ -1,0 +1,16 @@
+{
+  "name": "electron-background-process",
+  "version": "0.1.0",
+  "description": "Example application to demonstrate background processes in electron",
+  "main": "main.js",
+  "scripts": {
+    "start": "./node_modules/.bin/electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kyle Smith",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.0.0",
+    "uuid": "^2.0.1"
+  }
+}
