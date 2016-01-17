@@ -2,7 +2,8 @@
 <html>
   <head>
     <script>
-      const background = require('./background')();
+      const background = require('electron-process').background;
+      background.registerModule(require('./cpuIntensive'));
     </script>
   </head>
   <body>

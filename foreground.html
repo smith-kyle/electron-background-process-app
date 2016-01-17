@@ -5,11 +5,12 @@
     <h1>Main window</h1>
     <button id='add-button'>Add 1 and 2</button>
     <script>
-      const backgroundRunner = require('./backgroundRunner');
       const button = document.getElementById('add-button');
+      const foreground = require('electron-process').foreground;
+      const cpuIntensive = foreground.getModule(require('./cpuIntensive'));
 
       button.onclick = function() {
-        backgroundRunner.addTwoNumbers(1, 2)
+        cpuIntensive.doStuff(1, 2)
           .then((result) => console.log(result))
           .catch((reason) => console.error(reason));
       }
