@@ -1,19 +1,67 @@
 <!DOCTYPE html>
 <html>
-  <head></head>
-  <body>
-    <h1>Main window</h1>
-    <button id='add-button'>Add 1 and 2</button>
-    <script>
-      const button = document.getElementById('add-button');
-      const foreground = require('electron-process').foreground;
-      const cpuIntensive = foreground.getModule(require('./cpuIntensive'));
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <style>
+      html {
+        text-align: center;
+      }
 
-      button.onclick = function() {
-        cpuIntensive.doStuff(1, 2)
-          .then((result) => console.log(result))
+      body {
+        margin-top: 150px;
+      }
+
+      .buttons {
+        margin-bottom: 20px;
+      }
+
+      #result {
+        font-size: 20px;
+      }
+
+      #box {
+        width: 200px;
+        height: 200px;
+        background-color: white;
+        border: 1px solid black;
+        margin: 70px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Electron background process demo</h1>
+    <div id='box'></div>
+    <div class="buttons">
+      <button id='background-button' class="btn btn-lg btn-primary">Background</button>
+      <button id='foreground-button' class="btn btn-lg btn-primary">Foreground</button>
+    </div>
+    <p id="result" class="label label-lg label-success"></p>
+    <script>
+      const foreground = require('electron-process').foreground;
+
+      // Set up background button
+      const asyncModule = foreground.getModule(require('./cpuIntensive'));
+      const backgroundButton = document.getElementById('background-button');
+      backgroundButton.onclick = function() {
+        asyncModule.doStuff()
+          .then((result) => document.getElementById('result').innerText = result)
           .catch((reason) => console.error(reason));
       }
+
+      // Set up foreground button
+      const syncModule = require('./cpuIntensive');
+      const foregroundButton = document.getElementById('foreground-button');
+      foregroundButton.onclick = function() {
+        const result = syncModule.doStuff();
+        document.getElementById('result').innerText = result
+      }
+
+      // Rotate box
+      const box = document.getElementById('box');
+      var i = 0;
+      setInterval(() => {
+        box.style.transform = `rotate(${i++}deg)`;
+      }, 16);
     </script>
   </body>
 </html>
