@@ -43,8 +43,8 @@
       const asyncModule = foreground.getModule(require('./cpuIntensive'));
       const backgroundButton = document.getElementById('background-button');
       backgroundButton.onclick = function() {
-        asyncModule.doStuff()
-          .then((result) => document.getElementById('result').innerText = result)
+        asyncModule.doCallbackStuff((response) => document.getElementById('result').innerText = response + '%')
+          .then((result) => document.getElementById('result').innerText = 'Done!')
           .catch((reason) => console.error(reason));
       }
 
@@ -52,8 +52,9 @@
       const syncModule = require('./cpuIntensive');
       const foregroundButton = document.getElementById('foreground-button');
       foregroundButton.onclick = function() {
-        const result = syncModule.doStuff();
-        document.getElementById('result').innerText = result
+        document.getElementById('result').innerText = '0%';
+        const result = syncModule.doCallbackStuff((response) => document.getElementById('result').innerText = 'Done!');
+        // document.getElementById('result').innerText = result
       }
 
       // Rotate box

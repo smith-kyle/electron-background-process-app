@@ -11,6 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "electron-prebuilt": "^0.36.4",
-    "electron-process": "^0.1.3"
+    "electron-process": "^0.2.0"
   }
 }
